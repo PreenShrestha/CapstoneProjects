@@ -46,11 +46,11 @@ See the document section.
 
 We'll focus on the OutputSection class, specifically the method displayAllTransactions. This method displays all the transactions in a ledger, formatting and printing the data. Here's the relevant code:
 
-<img src = ""
+<img src = "https://github.com/PreenShrestha/CapstoneProjects/blob/main/images/DisplayAllTransaction.png">
 
 Let's Break it Down
 
-<img src = ""
+<img src = "https://github.com/PreenShrestha/CapstoneProjects/blob/main/images/AllTransaction%20.png">
 
 ## Images 
 
