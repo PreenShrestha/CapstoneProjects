@@ -39,5 +39,8 @@ The application will guide you through the process of recording transactions, vi
 
 ## Code Documentation
 
+See the document section.  
 
+<img src= "https://github.com/PreenShrestha/CapstoneProjects/blob/main/images/Home%20Screen.png">
 <img src= "https://github.com/PreenShrestha/CapstoneProjects/blob/main/images/Screenshot%202023-10-26%20133948.png">
+<img src="https://github.com/PreenShrestha/CapstoneProjects/blob/main/images/Report%20Screen.png">
