@@ -41,10 +41,11 @@ public class ReportPart {
                 OutputSection.displayPreviousYear(myLists, currentDate);
                 break;
             case 5:
-                System.out.println("Enter the vendor name (or type 'back' to go back): ");
+                System.out.println("Enter the vendor name : ");
                 String vendorInput = scanner.nextLine();
+                vendorInput = scanner.nextLine();
                 if (!vendorInput.equalsIgnoreCase("back")) {
-                    OutputSection.displayByVendor(myLists, scanner);
+                    OutputSection.displayByVendor(myLists, vendorInput);
                 }
                 break;
             case 6:

@@ -22,12 +22,15 @@ public class Ledger {
         switch (userInput) {
             case 'A':
                 OutputSection.displayAllTransactions(myLists);
+                askUserToContinueOrExit(scanner);
                 break;
             case 'D':
                 OutputSection.displayAllDeposits(myLists);
+                askUserToContinueOrExit(scanner);
                 break;
             case 'P':
                 OutputSection.displayAllPayment(myLists);
+                askUserToContinueOrExit(scanner);
                 break;
             case 'R':
                 ReportPart.showReportOptions(scanner, myLists);
@@ -36,6 +39,17 @@ public class Ledger {
                 break;
             default:
                 System.out.println("Invalid option. Please try again.");
+        }
+
+    }
+
+    public static void askUserToContinueOrExit(Scanner scanner)
+    {
+        System.out.println("Do you want to continue or exit: ");
+        char answer = scanner.next().charAt(0);
+        if(answer == 'n'|| answer == 'N')
+        {
+            System.exit(0);
         }
 
     }

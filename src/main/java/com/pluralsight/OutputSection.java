@@ -124,41 +124,20 @@ public class OutputSection {
 
 
 
-    public static void displayByVendor(List<Transaction> myLists, Scanner scanner) {
-        displayVendorOptions(myLists);
-        System.out.print("Enter the vendor name (or type 'back' to go back): ");
-        String vendorName = scanner.nextLine();
-
-        if (!vendorName.equalsIgnoreCase("back")) {
-            boolean found = false;
-
+    public static void displayByVendor(List<Transaction> myLists, String UserInput) {
+             boolean found = false;
             for (int i = myLists.size() - 1; i >= 0; i--) {
-                if (myLists.get(i).getVendor().equals(vendorName)) {
+                if (myLists.get(i).getVendor().equals(UserInput)) {
                     String s = String.format("%-16s %-10s %-35s %-30s %.2f", myLists.get(i).getDate(), myLists.get(i).getTime(), myLists.get(i).getDescription(), myLists.get(i).getVendor(), myLists.get(i).getAmount());
                     System.out.println(s);
                     found = true;
                 }
             }
             if (!found) {
-                System.out.println("No transactions found for the vendor: " + vendorName);
+                System.out.println("No transactions found for the vendor: " + UserInput);
             }
         }
-    }
 
-
-    public static void displayVendorOptions(List<Transaction> myLists) {
-        System.out.println("Following vendors appear in your ledger: ");
-        List<String> vendorsList = new ArrayList<>();
-        for (Transaction myList : myLists) {
-            if (!vendorsList.contains(myList.getVendor())) {
-                vendorsList.add(myList.getVendor());
-            }
-        }
-        Collections.sort(vendorsList); // Sort the vendors alphabetically
-        for (String vendor : vendorsList) {
-            System.out.println(vendor);
-        }
-    }
 
         public static List<Transaction> getTransaction() {
         String csvFileName = "Transactions.csv";
@@ -173,8 +152,17 @@ public class OutputSection {
                 String time = parts[1];
                 String description = parts[2];
                 String vendor = parts[3];
-                String amt = parts[4].substring(1); // "$40.67" - > "40.67"
-                double amount = Double.parseDouble(amt); //-> 40.67
+                String amt;
+                if(parts[4].charAt(0) == '-')
+                {
+                    //-$455.00 -> -455.00
+                     amt = parts[4].substring(0,1) + parts[4].substring(2);
+
+                }
+                else {
+                    amt = parts[4].substring(1); // "$40.67" - > "40.67"
+                }
+                double amount = Double.parseDouble(amt); //-> 40.67 // -$456
                 transactions.add(new Transaction(date, time, description, vendor, amount));
             }
         } catch (IOException e) {
@@ -183,7 +171,7 @@ public class OutputSection {
 
         return transactions;
 
-
+// -
     }
 
 
