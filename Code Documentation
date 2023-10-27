@@ -1,4 +1,5 @@
 Table of Contents
+
 1) Code Structure
 2) The Main Class: AccountingLedger
 3) Sorting Transactions: sortMyLists
@@ -9,14 +10,14 @@ Table of Contents
 8) Storing Transaction Data: Transaction
 9) Input Validation: Checker
 
-
+------------------------------------------------------------------------------------------------------------------
 1) Code Structure
 - The code is organized into multiple Java classes, each with specific functions.
   These classes are grouped within the com.pluralsight package, providing a clear structure for the application.
 
              package com.pluralsight;
 
-
+----------------------------------------------------------------------------------------------------------------
 2) The Main Class: AccountingLedger
 - The AccountingLedger class is the heart of the application, where the program starts.
   It presents a menu-driven interface for managing financial transactions and user interactions.
@@ -26,7 +27,7 @@ Table of Contents
           // ...
       }
   }
-
+-------------------------------------------------------------------------------------------------------------------
 3) Sorting Transactions: sortMyLists
 - The sortMyLists class is a custom comparator responsible for sorting transactions based on their date and time.
 
@@ -37,19 +38,19 @@ class sortMyLists implements Comparator<Transaction> {
         // ...
     }
 }
-
+--------------------------------------------------------------------------------------------------------------------
 4) Handling User Input: InputSection
 
   public class InputSection {
     // ...
   }
-
+----------------------------------------------------------------------------------------------------------------------
 5) Viewing Ledger Options: Ledger
 
  public class Ledger {
      // ...
  }
-
+---------------------------------------------------------------------------------------------------------------------
 6) Displaying Ledger Information: OutputSection       //See the readme for interesting piece of code
 
 - The OutputSection class is responsible for displaying ledger information and generating reports.
@@ -58,7 +59,7 @@ class sortMyLists implements Comparator<Transaction> {
   public class OutputSection {
       // ...
   }
-
+--------------------------------------------------------------------------------------------------------------------
 7) Generating Reports: ReportPart
 - The ReportPart class focuses on generating and displaying reports based on specific criteria.
   Users can access options for viewing month-to-date, previous month, year-to-date, previous year reports,
@@ -67,7 +68,7 @@ class sortMyLists implements Comparator<Transaction> {
   public class ReportPart {
       // ...
   }
-
+-------------------------------------------------------------------------------------------------------------------
 8) Storing Transaction Data: Transaction
 - The Transaction class represents individual financial transactions with properties for
   date, time, description, vendor, and amount. Methods are available to check whether a transaction
@@ -76,7 +77,7 @@ class sortMyLists implements Comparator<Transaction> {
   public class Transaction {
       // ...
   }
-
+----------------------------------------------------------------------------------------------------------------------
 9) Input Validation: Checker
 - The Checker class contains methods for input validation,
   ensuring that dates, times, and amounts are entered correctly.

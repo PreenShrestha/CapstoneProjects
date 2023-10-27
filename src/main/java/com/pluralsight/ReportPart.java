@@ -23,9 +23,10 @@ public class ReportPart {
         System.out.println("Please choose your option: ");
         int usersInput = scanner.nextInt();
 
-        LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter formatting = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String currentDate = currentTime.format(formatting);
+        LocalDateTime currentTime = LocalDateTime.now(); //This line retrieves the current date and time
+        // using the LocalDateTime class. It captures the current moment, including both the date and time.
+        DateTimeFormatter formatting = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //specify the desired format for the date
+        String currentDate = currentTime.format(formatting); //This line formats the current date and time, represented by the currentTime variable
 
         switch (usersInput) {
             case 1:
