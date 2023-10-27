@@ -8,7 +8,7 @@ The Financial Tracker App is a simple Java application that helps you manage you
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Code Documentation](#code-documentation)
-- [Interesting Piece of Code](#Piece of Code)
+- [Interesting Piece of Code](#piece-of-code)
 
 
 ## Features
@@ -42,7 +42,7 @@ The application will guide you through the process of recording transactions, vi
 
 See the document section. 
 
-## Piece of Code 
+## Interesting Piece of Code 
 
 We'll focus on the OutputSection class, specifically the method displayAllTransactions. This method displays all the transactions in a ledger, formatting and printing the data. Here's the relevant code:
 
