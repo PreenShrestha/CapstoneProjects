@@ -50,14 +50,14 @@ public class AccountingLedger {
     }
 
 
-
 }
 
 class sortMyLists implements Comparator<Transaction> {
     @Override
     public int compare(Transaction t1, Transaction t2) {
-        // Compare the date first
+        // Compare transactions based on the date and time
         int dateComparison = t1.getDate().compareTo(t2.getDate());
+
         // If the dates are equal, compare the time
         if (dateComparison == 0) {
             return t1.getTime().compareTo(t2.getTime());

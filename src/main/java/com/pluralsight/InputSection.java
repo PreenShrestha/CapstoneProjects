@@ -13,26 +13,27 @@ public class InputSection {
 
         System.out.println("Enter the date (DD/MM/YYYY): ");
         String date = scanner.nextLine();
-        boolean repeat = Checker.checkDate(date);
+        boolean repeat = Checker.isDateValid(date);
 
         while(!repeat)
         {
             System.out.println("Invalid Input see Format and re- enter.");
             System.out.println("Enter the Date in DD/MM/YYYY format: ");
             date = scanner.nextLine();
-            repeat = Checker.checkDate(date);
+            repeat = Checker.isDateValid(date);
         }
 
 
         System.out.println("Enter the time (HH:mm): ");
         String time = scanner.nextLine();
-        boolean rerun = Checker.checkTime(time);
+        boolean rerun = Checker.isTimeValid(time);
+
         while(!rerun)
         {
             System.out.println("You have invalid input read format and re- enter");
             System.out.println("Enter the time in HH:mm format: ");
             time= scanner.nextLine();
-            rerun = Checker.checkDate(time);
+            rerun = Checker.isTimeValid(time);
         }
 
         System.out.println("Enter the description: ");
@@ -42,24 +43,23 @@ public class InputSection {
         String vendor = scanner.nextLine();
 
         System.out.println("Enter the amount: ");
-        double amount = scanner.nextDouble();
-        double res = 0.00;
-        boolean s = Checker.checkAmount(res);
-        while(s) {
+        double amount = 0.00;
+        boolean validAmount = false;
+
+        while(!validAmount) {
             try {
-                res = scanner.nextDouble();
+                amount = scanner.nextDouble();
                 scanner.nextLine();
-                res = amount;
+                validAmount = Checker.isAmountValid(amount);
                 if (amount >= 0) {
-                    res = amount;
-                    s = false; // Exit the loop when a non-negative amount is entered
+                    validAmount = true;
                 } else {
                     System.out.println("Amount cannot be negative. Re-enter a non-negative amount.");
                 }
             }
             catch (InputMismatchException e)
             {
-                System.out.println("Re - enter");
+                System.out.println("Invalid input. Please re-enter the amount.");
                 scanner.nextLine();
             }
         }
@@ -85,25 +85,61 @@ public class InputSection {
     }
 
     public static void makePayment(List<Transaction>myLists) { //this will all store in csv file
-        System.out.println("Enter the date YYYY/MM/DD: ");
+        System.out.println("Enter the date (DD/MM/YYYY): ");
         String date = scanner.nextLine();
+        boolean repeat = Checker.isDateValid(date);
 
-        System.out.println("Enter the time: ");
+        while (!repeat) {
+            System.out.println("Invalid Input. Please see the format and re-enter.");
+            System.out.println("Enter the Date in DD/MM/YYYY format: ");
+            date = scanner.nextLine();
+            repeat = Checker.isDateValid(date);
+        }
+
+        System.out.println("Enter the time (HH:mm): ");
         String time = scanner.nextLine();
+        boolean rerun = Checker.isTimeValid(time);
+
+        while (!rerun) {
+            System.out.println("You have entered an invalid time format. Please re-enter.");
+            System.out.println("Enter the time in HH:mm format: ");
+            time = scanner.nextLine();
+            rerun = Checker.isTimeValid(time);
+        }
 
         System.out.println("Enter the description: ");
         String description = scanner.nextLine();
 
-        System.out.println("Enter the receiver name: ");
+        System.out.println("Enter the vendor name: ");
         String receiver = scanner.nextLine();
 
         System.out.println("Enter the amount: ");
-        double amount = scanner.nextDouble();
+        double amount = 0.00;
+
+        while (amount <= 0) {
+            try {
+                amount = scanner.nextDouble();
+                scanner.nextLine();
+
+                if (amount <= 0) {
+                    System.out.println("Amount must be a positive number. Re-enter the amount.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please re-enter the amount.");
+                scanner.nextLine();
+            }
+        }
+        if (amount > 0) {
+            Transaction payment = new Transaction(date, time, description, receiver, amount);
+            myLists.add(payment);
+            // Code to save the transaction to the CSV file.
+        }
+
 
         try{
-            FileWriter writer = new FileWriter("Transaction.csv");
-            String writeLine = String.format("%s|%s|%s|%s|-$%.2f",date,time,description,receiver,amount);
-            writer.write(writeLine + System.lineSeparator());
+            FileWriter writer = new FileWriter("Transactions.csv", true);
+            String s1 = String.format("%s|%s|%s|%s|-$%.2f",date,time,description,receiver,amount);
+            writer.write(s1 + System.lineSeparator());
             writer.close();
             System.out.println("Payment recorded successfully.");
 

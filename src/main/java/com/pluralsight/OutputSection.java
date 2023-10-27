@@ -4,59 +4,59 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Collections;
 import java.util.Scanner;
 
+
 public class OutputSection {
+
+    //Ledger Section Display
     public static void displayAllTransactions(List<Transaction> lists) {
         System.out.print("""
                                    <<< All Transactions >>>
                                        
                 """);
+        System.out.printf("%-15s %-10s %-35s %-20s %-10s%n", "Date", "Time", "Description", "Vendor", "Amount");
 
-        for (int i=lists.size() -1; i >= 0; i--) {
+        for (int i = lists.size() -1; i >= 0; i--) {
             Transaction transaction = lists.get(i);
-            System.out.printf("%-15s %-10s %-35s %-20s $%.02f", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+            System.out.printf("%-15s %-10s %-35s %-20s $%.02f%n",
+                    transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
         }
-        //Transaction t[i]
-        //t[i].getDate(), getTime(),......
+
     }
 
     public static void displayAllDeposits(List<Transaction> lists) {
-        System.out.print(""" 
-                              <<< All Deposit Transactions >>>
-                             
-             """);
-        System.out.printf("%-15s %-10s %-35s %-20s %9s%n", "Date", "Time", "Description", "Vendor", "Amount");
-
-        for (int i = lists.size()-1; i>=0; i--) {
-            Transaction transaction = lists.get(i);
-            if (transaction.getAmount() < 0) { // Check if the amount is negative (indicating a deposit)
-                System.out.printf("%-15s %-10s %-35s %-20s $%.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-            }
-        }
-    }
-
-
-    public static void displayAllPayment(List<Transaction> lists) //create function for displaying all
-    {
         System.out.print("""
-                                   <<< All Payments Transactions >>>
-                                       
-                """);
-        System.out.printf("%-15s %-10s %-35s %-20s %-10s%n", "Date", "Time", "Description", "Receiver", "Amount");
+                          <<< All Deposit Transactions >>>
+                     
+             """);
+        System.out.printf("%-15s %-10s %-35s %-20s %10s%n", "Date", "Time", "Description", "Vendor", "Amount");
 
-        for (int i = lists.size() - 1; i >= 0; i--) {
-            Transaction transaction = lists.get(i);
-            if (transaction.getAmount() < 0) {
-                String s = String.format("%-16s %-10s %-35s %-30s $%.2f", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), -transaction.getAmount());
+        for (Transaction transaction : lists) {
+            if (transaction.isDeposit()) {
+                System.out.printf("%-15s %-10s %-35s %-20s $%.2f%n",
+                        transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+            }
+        }
+    }
+    public static void displayAllPayment(List<Transaction> lists) {
+        System.out.print("""
+                          <<< All Payments Transactions >>>
+                     
+             """);
+        System.out.printf("%-15s %-10s %-35s %-20s %10s%n", "Date", "Time", "Description", "Receiver", "Amount");
+
+        for (Transaction transaction : lists) {
+            if (transaction.isPayment()) {
+                System.out.printf("%-15s %-10s %-35s %-20s $%.2f%n",
+                        transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
             }
         }
     }
 
-
-        //reports
+        //ReportSection Display
 
         public static void displayMonthToDate(List<Transaction> myLists, String currentDate) {
         boolean isEmpty = true;
@@ -122,39 +122,46 @@ public class OutputSection {
         }
     }
 
-        public static void displayByVendor(List<Transaction> myLists, Scanner scanner) {
+
+
+    public static void displayByVendor(List<Transaction> myLists, Scanner scanner) {
         displayVendorOptions(myLists);
-        System.out.println("Enter the vendor name: ");
-        String vendorInput = scanner.nextLine();
-        vendorInput = scanner.nextLine();
-        for (int i = myLists.size() - 1; i >= 0; i--) {
-            if (myLists.get(i).getVendor().equals(vendorInput)) {
-                String s = String.format("%-16s %-10s %-35s %-30s %.2f", myLists.get(i).getDate(), myLists.get(i).getTime(), myLists.get(i).getDescription(), myLists.get(i).getVendor(), myLists.get(i).getAmount());
-                System.out.println(s);
+        System.out.print("Enter the vendor name (or type 'back' to go back): ");
+        String vendorName = scanner.nextLine();
+
+        if (!vendorName.equalsIgnoreCase("back")) {
+            boolean found = false;
+
+            for (int i = myLists.size() - 1; i >= 0; i--) {
+                if (myLists.get(i).getVendor().equals(vendorName)) {
+                    String s = String.format("%-16s %-10s %-35s %-30s %.2f", myLists.get(i).getDate(), myLists.get(i).getTime(), myLists.get(i).getDescription(), myLists.get(i).getVendor(), myLists.get(i).getAmount());
+                    System.out.println(s);
+                    found = true;
+                }
+            }
+            if (!found) {
+                System.out.println("No transactions found for the vendor: " + vendorName);
             }
         }
-
-
     }
 
-        public static void displayVendorOptions(List<Transaction> myLists) {
-        System.out.println("Following vendor are appear in your ledger: ");
-        StringBuilder res = new StringBuilder();
-        HashSet<String> s = new HashSet<>();
+
+    public static void displayVendorOptions(List<Transaction> myLists) {
+        System.out.println("Following vendors appear in your ledger: ");
+        List<String> vendorsList = new ArrayList<>();
         for (Transaction myList : myLists) {
-            if (!s.contains(myList.getVendor())) {
-                String Add = myList.getVendor() + "      ";
-                res.append(Add);
-                s.add(myList.getVendor());
+            if (!vendorsList.contains(myList.getVendor())) {
+                vendorsList.add(myList.getVendor());
             }
         }
-        System.out.println(res.toString());
+        Collections.sort(vendorsList); // Sort the vendors alphabetically
+        for (String vendor : vendorsList) {
+            System.out.println(vendor);
+        }
     }
-
-
 
         public static List<Transaction> getTransaction() {
-        String csvFileName = "transactions.csv";
+        String csvFileName = "Transactions.csv";
         List<Transaction> transactions = new ArrayList<>();
         String line;
 

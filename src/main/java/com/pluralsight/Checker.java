@@ -1,96 +1,88 @@
 package com.pluralsight;
 
-import java.io.IOError;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Checker {
 
-    public static boolean checkDate(String date)
-    {
+    public static boolean isDateValid(String inputDate) {
         LocalDateTime currentDate = LocalDateTime.now();
         DateTimeFormatter formatInThisForm = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        String cD = currentDate.format(formatInThisForm);
-        String [] cDArray = cD.split("/");
+        String currentDateString = currentDate.format(formatInThisForm);
+        String[] currentDateParts = currentDateString.split("/");
 
-        if(date.contains("-"))
-        {
-            return false;
-        }
-        String [] s = date.split("/");
-
-        if(s.length != 3 ) // should have 3 value with date month and year more than that invalid input
-        {
+        if (inputDate.contains("-")) {
             return false;
         }
 
-        for (int i = 0; i < s.length; i++) {
-            for (int j = 0; j < s[i].length(); j++) {
-                if (!Character.isDigit(s[i].charAt(j))) {
-                    return false; // If any character is not a digit, it's an invalid date
+        String[] inputDateParts = inputDate.split("/");
+
+        if (inputDateParts.length != 3) {
+            return false;
+        }
+
+        for (String part : inputDateParts) {
+            for (int i = 0; i < part.length(); i++) {
+                if (!Character.isDigit(part.charAt(i)) || part.length() > 4) {
+                    return false;
                 }
             }
         }
 
-        if (Integer.parseInt(s[0]) > 31 || Integer.parseInt(s[0]) == 0) //In month there cannot be more than 31 days
-        {
-            return false;
-        }
-        if (Integer.parseInt(s[1])>12 || Integer.parseInt(s[1])==0)// In year there cannot be more than 12 months
-        {
+        int inputDay = Integer.parseInt(inputDateParts[0]);
+        int inputMonth = Integer.parseInt(inputDateParts[1]);
+        int inputYear = Integer.parseInt(inputDateParts[2]);
+
+        if (inputDay > 31 || inputDay == 0 || inputMonth > 12 || inputMonth == 0) {
             return false;
         }
 
-        //Checking for future time
+        int currentYear = Integer.parseInt(currentDateParts[2]);
+        int currentMonth = Integer.parseInt(currentDateParts[1]);
+        int currentDay = Integer.parseInt(currentDateParts[0]);
 
-        // dd/mm/yyyy -> 2023 entry -> 2023 < false
-        if(Integer.parseInt(cDArray[2]) < Integer.parseInt(s[2]) || Integer.parseInt(cDArray[2]) == Integer.parseInt(s[2]) && Integer.parseInt(cDArray[1]) < Integer.parseInt(s[1]) ||
-                Integer.parseInt(cDArray[1]) == Integer.parseInt(s[1]) && Integer.parseInt(cDArray[0])< Integer.parseInt(s[0]))
-        {
+        if (currentYear < inputYear || (currentYear == inputYear && currentMonth < inputMonth) || (currentYear == inputYear && currentMonth == inputMonth && currentDay < inputDay)) {
             System.out.println("Future transaction cannot be saved");
             return false;
-
         }
-
 
         return true;
     }
 
-    public static boolean checkTime(String time)
-    {
-        if(!time.contains(":"))
-        {
+    public static boolean isTimeValid(String inputTime) {
+        if (!inputTime.contains(":")) {
             return false;
         }
-        String [] t = time.split(":");
-        if(t.length != 2) // We are taking only Hours and min
-        {
+
+        String[] timeParts = inputTime.split(":");
+        if (timeParts.length != 2) {
             return false;
         }
+
         try {
-            if (Integer.parseInt(t[0]) > 24 ) // hours
-            {
+            int hours = Integer.parseInt(timeParts[0]);
+            int minutes = Integer.parseInt(timeParts[1]);
+
+            if (hours > 24 || minutes > 59) {
                 return false;
             }
-            if(Integer.parseInt(t[1]) > 59)
-            {
-                return false;
-            }
-        }
-        catch (IOError error){
-            System.out.println("There is character in your output");
+        } catch (NumberFormatException e) {
+            System.out.println("There is a non-numeric character in your time input");
             return false;
         }
+
         return true;
+    }
+    public static boolean isAmountValid(double amount) {
+        // Check if the amount is non-negative and has at most two decimal places
+        return amount >= 0 && String.format("%.2f", amount).equals(String.valueOf(amount));
     }
 
-    public static boolean checkAmount(double amt)
-    {
-        if(amt<0)
-        {
-            return false;
-        }
-        return true;
-    }
+
 }
+
+
+
+

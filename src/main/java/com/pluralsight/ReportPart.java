@@ -41,11 +41,15 @@ public class ReportPart {
                 OutputSection.displayPreviousYear(myLists, currentDate);
                 break;
             case 5:
-                OutputSection.displayByVendor(myLists, scanner);
+                System.out.println("Enter the vendor name (or type 'back' to go back): ");
+                String vendorInput = scanner.nextLine();
+                if (!vendorInput.equalsIgnoreCase("back")) {
+                    OutputSection.displayByVendor(myLists, scanner);
+                }
                 break;
             case 6:
                 System.out.println("You selected Back");
-                break;
+                Ledger.showLedgerOptions(scanner, myLists);
             default:
                 System.out.println("Invalid choice. Please select a valid option.");
         }

@@ -1,6 +1,6 @@
 package com.pluralsight;
 
-class Transaction {
+public class Transaction {
     private String date;
     private String time;
     private String description;
@@ -56,5 +56,13 @@ class Transaction {
 
     public void setVendor(String vendor) {
         this.vendor = vendor;
+    }
+
+    public boolean isDeposit() {
+        return amount >= 0;
+    }
+
+    public boolean isPayment() {
+        return amount < 0;
     }
 }
