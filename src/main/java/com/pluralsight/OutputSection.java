@@ -3,7 +3,11 @@ package com.pluralsight;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -17,7 +21,7 @@ public class OutputSection {
                 """);
         System.out.printf("%-15s %-10s %-35s %-20s %-10s%n", "Date", "Time", "Description", "Vendor", "Amount");
 
-        for (int i = lists.size() -1; i >= 0; i--) {
+        for (int i = lists.size() - 1; i >= 0; i--) {
             Transaction transaction = lists.get(i);
             System.out.printf("%-15s %-10s %-35s %-20s $%.02f%n",
                     transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
@@ -27,9 +31,9 @@ public class OutputSection {
 
     public static void displayAllDeposits(List<Transaction> lists) {
         System.out.print("""
-                          <<< All Deposit Transactions >>>
-                     
-             """);
+                             <<< All Deposit Transactions >>>
+                        
+                """);
         System.out.printf("%-15s %-10s %-35s %-20s %10s%n", "Date", "Time", "Description", "Vendor", "Amount");
 
         for (Transaction transaction : lists) {
@@ -39,11 +43,12 @@ public class OutputSection {
             }
         }
     }
+
     public static void displayAllPayment(List<Transaction> lists) {
         System.out.print("""
-                          <<< All Payments Transactions >>>
-                     
-             """);
+                             <<< All Payments Transactions >>>
+                        
+                """);
         System.out.printf("%-15s %-10s %-35s %-20s %10s%n", "Date", "Time", "Description", "Receiver", "Amount");
 
         for (Transaction transaction : lists) {
@@ -54,19 +59,19 @@ public class OutputSection {
         }
     }
 
-        //ReportSection Display
+    //ReportSection Display
 
-        public static void displayMonthToDate(List<Transaction> myLists, String currentDate) {
-        boolean isEmpty = true;
-        for (int i = myLists.size() - 1; i >= 0; i--) {
-            if (myLists.get(i).getDate().substring(3).equals(currentDate.substring(3))) {
-                String s = String.format("%-16s %-10s %-35s %-30s %.2f", myLists.get(i).getDate(), myLists.get(i).getTime(), myLists.get(i).getDescription(), myLists.get(i).getVendor(), myLists.get(i).getAmount());
-                System.out.println(s);
-                isEmpty = false;
+    public static List<Transaction> transactions = getTransaction();
+    public static void displayMonthToDate() {
+        LocalDate now = LocalDate.now();
+        for (Transaction transaction : transactions) {
+            int date = transaction.getDate().getMonthValue();
+            int date2 = now.getMonthValue();
+            int year = transaction.getDate().getYear();
+            int year2 = now.getYear();
+            if (date == date2 && year == year2) {
+                printTransaction(transaction);
             }
-        }
-        if (isEmpty) {
-            System.out.println("No transactions for this month");
         }
     }
 
@@ -88,7 +93,7 @@ public class OutputSection {
         }
     }
 
-        public static void displayYearToDate(List<Transaction> myLists, String currentDate) {
+    public static void displayYearToDate(List<Transaction> myLists, String currentDate) {
         String currentYear = currentDate.substring(6);
         boolean isEmpty = true;
         for (int i = myLists.size() - 1; i >= 0; i--) {
@@ -103,7 +108,7 @@ public class OutputSection {
         }
     }
 
-        public static void displayPreviousYear(List<Transaction> myLists, String currentDate) {
+    public static void displayPreviousYear(List<Transaction> myLists, String currentDate) {
         int currentYear = Integer.parseInt(currentDate.substring(6));
         String previousYear = "" + (currentYear - 1);
         System.out.println("PreviousYear: " + previousYear);
@@ -121,23 +126,22 @@ public class OutputSection {
     }
 
 
-
     public static void displayByVendor(List<Transaction> myLists, String UserInput) {
-             boolean found = false;
-            for (int i = myLists.size() - 1; i >= 0; i--) {
-                if (myLists.get(i).getVendor().equals(UserInput)) {
-                    String s = String.format("%-16s %-10s %-35s %-30s %.2f", myLists.get(i).getDate(), myLists.get(i).getTime(), myLists.get(i).getDescription(), myLists.get(i).getVendor(), myLists.get(i).getAmount());
-                    System.out.println(s);
-                    found = true;
-                }
-            }
-            if (!found) {
-                System.out.println("No transactions found for the vendor: " + UserInput);
+        boolean found = false;
+        for (int i = myLists.size() - 1; i >= 0; i--) {
+            if (myLists.get(i).getVendor().equals(UserInput)) {
+                String s = String.format("%-16s %-10s %-35s %-30s %.2f", myLists.get(i).getDate(), myLists.get(i).getTime(), myLists.get(i).getDescription(), myLists.get(i).getVendor(), myLists.get(i).getAmount());
+                System.out.println(s);
+                found = true;
             }
         }
+        if (!found) {
+            System.out.println("No transactions found for the vendor: " + UserInput);
+        }
+    }
 
 
-        public static List<Transaction> getTransaction() {
+    public static List<Transaction> getTransaction() {
         String csvFileName = "Transactions.csv";
         List<Transaction> transactions = new ArrayList<>();
         String line;
@@ -146,31 +150,43 @@ public class OutputSection {
             reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
-                String date = parts[0];
+
                 String time = parts[1];
                 String description = parts[2];
                 String vendor = parts[3];
                 String amt;
-                if(parts[4].charAt(0) == '-')
-                {
+                if (parts[4].charAt(0) == '-') {
                     //-$455.00 -> -455.00
-                     amt = parts[4].substring(0,1) + parts[4].substring(2);
+                    amt = parts[4].substring(0, 1) + parts[4].substring(2);
 
-                }
-                else {
+                } else {
                     amt = parts[4].substring(1); // "$40.67" - > "40.67"
                 }
                 double amount = Double.parseDouble(amt); //-> 40.67 // -$456
-                transactions.add(new Transaction(date, time, description, vendor, amount));
+                DateTimeFormatter formatting = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                transactions.add(new Transaction(LocalDate.parse(parts[0], formatting), time, description, vendor, amount));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Comparator<Transaction> compareByDate = Comparator.comparing(Transaction::getDate).reversed();
+        Comparator<Transaction> compareByTime = Comparator.comparing(Transaction::getTime).reversed();
+        transactions.sort(compareByDate.thenComparing(compareByTime));
 
         return transactions;
 
 // -
     }
 
-
+    public static void printTransaction(Transaction transaction) { // To print data
+        DateTimeFormatter formatting = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.printf("%-15s %-15s %-30s %-25s %15.2f\n",
+                transaction.getDate().format(formatting),
+                transaction.getTime(),
+                transaction.getDescription(),
+                transaction.getVendor(),
+                transaction.getAmount()
+        );
     }
+
+}
