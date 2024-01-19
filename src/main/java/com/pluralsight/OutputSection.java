@@ -81,23 +81,15 @@ public class OutputSection {
     }
 
     public static void displayPreviousMonth() {
-        //System.out.println("PreviousMonth: " + previousMonth);
-        //boolean isEmpty = true;
         for (Transaction transaction : transactions) {
             date = transaction.getDate().getMonthValue();
             date2 = now.minusMonths(1).getMonthValue();
-            date2 = now.getMonthValue();
             year = transaction.getDate().getYear();
-            year2 = now.getYear();
+            year2 = now.getMonthValue() == 1 ? now.minusYears(1).getYear() : now.getYear();
             if (date == date2 && year == year2) {
                 printTransaction(transaction);
-
             }
-
         }
-        // if (isEmpty) {
-        //   System.out.println("No transactions on previous month");
-        // }
     }
 
     public static void displayYearToDate(List<Transaction> myLists, String currentDate) {
