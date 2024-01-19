@@ -62,35 +62,42 @@ public class OutputSection {
     //ReportSection Display
 
     public static List<Transaction> transactions = getTransaction();
+    static LocalDate now = LocalDate.now();
+    static int date;
+    static int date2;
+    static int year;
+    static int year2;
+
     public static void displayMonthToDate() {
-        LocalDate now = LocalDate.now();
         for (Transaction transaction : transactions) {
-            int date = transaction.getDate().getMonthValue();
-            int date2 = now.getMonthValue();
-            int year = transaction.getDate().getYear();
-            int year2 = now.getYear();
+            date = transaction.getDate().getMonthValue();
+            date2 = now.getMonthValue();
+            year = transaction.getDate().getYear();
+            year2 = now.getYear();
             if (date == date2 && year == year2) {
                 printTransaction(transaction);
             }
         }
     }
 
-        public static void displayPreviousMonth(List<Transaction> myLists, String currentDate) {
-        int currentMonth = Integer.parseInt(currentDate.substring(3, 5));
-        String previousMonth = String.format("%02d/%s", currentMonth - 1, currentDate.substring(6));
-        System.out.println("PreviousMonth: " + previousMonth);
-        boolean isEmpty = true;
-        for (int i = myLists.size() - 1; i >= 0; i--) {
-            if (myLists.get(i).getDate().substring(3).equals(previousMonth)) {
-                String s = String.format("%-16s %-10s %-35s %-30s %.2f", myLists.get(i).getDate(), myLists.get(i).getTime(), myLists.get(i).getDescription(), myLists.get(i).getVendor(), myLists.get(i).getAmount());
-                System.out.println(s);
-                isEmpty = false;
+    public static void displayPreviousMonth() {
+        //System.out.println("PreviousMonth: " + previousMonth);
+        //boolean isEmpty = true;
+        for (Transaction transaction : transactions) {
+            date = transaction.getDate().getMonthValue();
+            date2 = now.minusMonths(1).getMonthValue();
+            date2 = now.getMonthValue();
+            year = transaction.getDate().getYear();
+            year2 = now.getYear();
+            if (date == date2 && year == year2) {
+                printTransaction(transaction);
+
             }
 
         }
-        if (isEmpty) {
-            System.out.println("No transactions on previous month");
-        }
+        // if (isEmpty) {
+        //   System.out.println("No transactions on previous month");
+        // }
     }
 
     public static void displayYearToDate(List<Transaction> myLists, String currentDate) {
