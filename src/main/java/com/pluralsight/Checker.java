@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 
 import static com.pluralsight.InputSection.scanner;
 
@@ -222,6 +223,31 @@ public class Checker {
                 return parseAmount(getStringInputCustom("Enter an amount: "));
             }
         }
+    }
+
+    public static double getAmount(String prompt) {
+        System.out.println(prompt);
+        double amount = 0.00;
+        boolean validAmount = false;
+
+        while(!validAmount) {
+            try {
+                amount = scanner.nextDouble();
+                scanner.nextLine();
+                validAmount = Checker.isAmountValid(amount);
+                if (amount >= 0) {
+                    validAmount = true;
+                } else {
+                    System.out.println("Amount cannot be negative. Re-enter a non-negative amount.");
+                }
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("Invalid input. Please re-enter the amount.");
+                scanner.nextLine();
+            }
+        }
+        return amount;
     }
 }
 

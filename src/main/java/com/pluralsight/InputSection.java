@@ -19,30 +19,9 @@ public class InputSection {
         LocalTime timeInput = Checker.getTime("Enter the time (HH:mm) or press enter for automatic");
         String description = Checker.getStringInput("Enter the description: ");
         String vendor = Checker.getStringInput("Enter the vendor name: ");
-        System.out.println("Enter the amount: ");
-        double amount = 0.00;
-        boolean validAmount = false;
-
-        while(!validAmount) {
-            try {
-                amount = scanner.nextDouble();
-                scanner.nextLine();
-                validAmount = Checker.isAmountValid(amount);
-                if (amount >= 0) {
-                    validAmount = true;
-                } else {
-                    System.out.println("Amount cannot be negative. Re-enter a non-negative amount.");
-                }
-            }
-            catch (InputMismatchException e)
-            {
-                System.out.println("Invalid input. Please re-enter the amount.");
-                scanner.nextLine();
-            }
-        }
+        double amount = Checker.getAmount("Enter the amount: ");
         writeToCSV(myLists, dateInput, timeInput, description, vendor, amount);
     }
-
 
 
     public static void makePayment(List<Transaction>myLists) { //this will all store in csv file
@@ -50,28 +29,7 @@ public class InputSection {
         LocalTime timeInput = Checker.getTime("Enter the time (HH:mm) or press enter for automatic");
         String description = Checker.getStringInput("Enter the description: ");
         String vendor = Checker.getStringInput("Enter the vendor name: ");
-
-        System.out.println("Enter the amount: ");
-        double amount = 0.00;
-
-        while (amount <= 0) {
-            try {
-                amount = scanner.nextDouble();
-                scanner.nextLine();
-
-                if (amount <= 0) {
-                    System.out.println("Amount must be a positive number. Re-enter the amount.");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please re-enter the amount.");
-                scanner.nextLine();
-            }
-        }
-        if (amount > 0) {
-            Transaction payment = new Transaction(dateInput, timeInput, description, vendor, amount);
-            myLists.add(payment);
-            // Code to save the transaction to the CSV file.
-        }
+        double amount = Checker.getAmount("Enter the amount: ");
         writeToCSV(myLists, dateInput, timeInput, description, vendor, -amount);
     }
 

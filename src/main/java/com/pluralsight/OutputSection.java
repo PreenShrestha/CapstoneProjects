@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -62,18 +63,18 @@ public class OutputSection {
 
     public static List<Transaction> transactions = getTransaction();
     static LocalDate now = LocalDate.now();
-    static int date;
-    static int date2;
-    static int year;
-    static int year2;
+    static int transactionDate;
+    static int currentDate;
+    static int transactionYear;
+    static int currentYear;
 
     public static void displayMonthToDate() {
         for (Transaction transaction : transactions) {
-            date = transaction.getDate().getMonthValue();
-            date2 = now.getMonthValue();
-            year = transaction.getDate().getYear();
-            year2 = now.getYear();
-            if (date == date2 && year == year2) {
+            transactionDate = transaction.getDate().getMonthValue();
+            currentDate = now.getMonthValue();
+            transactionYear = transaction.getDate().getYear();
+            currentYear = now.getYear();
+            if (transactionDate == currentDate && transactionYear == currentYear) {
                 printTransaction(transaction);
             }
         }
@@ -81,11 +82,11 @@ public class OutputSection {
 
     public static void displayPreviousMonth() {
         for (Transaction transaction : transactions) {
-            date = transaction.getDate().getMonthValue();
-            date2 = now.minusMonths(1).getMonthValue();
-            year = transaction.getDate().getYear();
-            year2 = now.getMonthValue() == 1 ? now.minusYears(1).getYear() : now.getYear();
-            if (date == date2 && year == year2) {
+            transactionDate = transaction.getDate().getMonthValue();
+            currentDate = now.minusMonths(1).getMonthValue();
+            transactionYear = transaction.getDate().getYear();
+            currentYear = now.getMonthValue() == 1 ? now.minusYears(1).getYear() : now.getYear();
+            if (transactionDate == currentDate && transactionYear == currentYear) {
                 printTransaction(transaction);
             }
         }
@@ -93,10 +94,10 @@ public class OutputSection {
 
     public static void displayYearToDate() {
         for (Transaction transaction : transactions) {
-            date = transaction.getDate().getYear();
-            date2 = now.getYear();
+            transactionYear = transaction.getDate().getYear();
+            currentYear = now.getYear();
 
-            if (date == date2) {
+            if (transactionYear == currentYear) {
                 printTransaction(transaction);
             }
         }
@@ -104,10 +105,10 @@ public class OutputSection {
 
     public static void displayPreviousYear() {
         for(Transaction transaction : transactions) {
-            date = transaction.getDate().getYear();
-            date2 = now.minusYears(1).getYear();
+            transactionYear = transaction.getDate().getYear();
+            currentYear = now.minusYears(1).getYear();
 
-            if (date == date2) {
+            if (transactionYear == currentYear) {
                 printTransaction(transaction);
             }
         }

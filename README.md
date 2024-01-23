@@ -44,11 +44,6 @@ This Capstone 2.0 project, led by Team DOSE 2.0, builds upon the foundation laid
 ![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/dd812604-7d83-4f19-93f5-caeacfa4c3f2)
 
 
-
-
- 
-
-
 # Financial Tracker App
 
 The Financial Tracker App is a simple Java application that helps you manage your financial transactions. 
