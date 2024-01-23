@@ -16,6 +16,8 @@ updated input section (Kerry)
 
 ![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/5536d4bc-6d7c-4e64-84e6-8ff5c3dcec9f)
 
+![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/8ae16946-406c-41cb-b9ce-0b31a1b21e72)
+
 ![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/dd812604-7d83-4f19-93f5-caeacfa4c3f2)
 
 
