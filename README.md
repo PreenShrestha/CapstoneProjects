@@ -11,7 +11,7 @@ updated output section (Sleaman)
 Challenge added custom search in output section class (Alexis)
 updated input section (Kerry)
 
-![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/802f3ec2-67e7-40de-8916-0be1fc520c0f)
+![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/750b7fa0-27ad-483f-b910-618e4ecb1b97)
 
 
 ![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/b080e688-3328-4c40-b6de-20ead08d9aff)
