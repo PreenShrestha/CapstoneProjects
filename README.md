@@ -6,11 +6,12 @@ ReadMeFile updated (Sleaman)
 Enhancements made for Accounting Ledger (CapStone1)
 Enhance Preen’s Capstone 1 by addressing newly discovered bugs, improving clean code, updating the readme file, and incorporating enhancements from the challenge in Capstone 1. (Alexis and Preen)
 Modify, update and enhance the specified images accordingly. (Preen)
-added Ansi colors in output section class (Preen)
+added Ansi colors on accounting ledger class (Preen)
 updated output section (Sleaman)
 Challenge added custom search in output section class (Alexis)
 updated input section (Kerry)
 
+![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/802f3ec2-67e7-40de-8916-0be1fc520c0f)
 
 
 ![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/b080e688-3328-4c40-b6de-20ead08d9aff)
