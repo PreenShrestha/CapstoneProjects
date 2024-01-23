@@ -40,7 +40,7 @@ public class InputSection {
                 scanner.nextLine();
             }
         }
-        wrtieToCSV(myLists, dateInput, timeInput, description, vendor, amount);
+        writeToCSV(myLists, dateInput, timeInput, description, vendor, amount);
     }
 
 
@@ -72,10 +72,10 @@ public class InputSection {
             myLists.add(payment);
             // Code to save the transaction to the CSV file.
         }
-        wrtieToCSV(myLists, dateInput, timeInput, description, vendor, -amount);
+        writeToCSV(myLists, dateInput, timeInput, description, vendor, -amount);
     }
 
-    private static void wrtieToCSV(List<Transaction> myLists, LocalDate dateInput, LocalTime timeInput, String description, String vendor, double amount) {
+    private static void writeToCSV(List<Transaction> myLists, LocalDate dateInput, LocalTime timeInput, String description, String vendor, double amount) {
         try { // handling potential errors in the code that follows.
             FileWriter writer = new FileWriter("Transactions.csv", true);
             //used to write data to a file called "Transactions.csv."
