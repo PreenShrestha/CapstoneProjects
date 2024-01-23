@@ -1,3 +1,28 @@
+Capstone 2.0 
+Team Name: DOSE 2.O
+Team Members: Alexis Sanchez, Preen Shrestha, Kerry Metayer, Sleaman Abdelhadi   
+         
+ReadMeFile updated (Sleaman)
+Enhancements made for Accounting Ledger (CapStone1)
+Enhance Preen’s Capstone 1 by addressing newly discovered bugs, improving clean code, updating the readme file, and incorporating enhancements from the challenge in Capstone 1. (Alexis and Preen)
+Modify, update and enhance the specified images accordingly. (Preen)
+updated output section (Sleaman)
+updated input section (Kerry)
+
+
+![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/22596b46-fccb-4c00-a710-9708b8b751b7)
+
+![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/9a5bbbfb-7bbe-4ad6-a307-d5cf3287e1f7)
+
+![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/5536d4bc-6d7c-4e64-84e6-8ff5c3dcec9f)
+
+![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/dd812604-7d83-4f19-93f5-caeacfa4c3f2)
+
+
+
+
+ 
+
 
 # Financial Tracker App
 
