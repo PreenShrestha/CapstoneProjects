@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -26,7 +26,6 @@ public class OutputSection {
             System.out.printf("%-15s %-10s %-35s %-20s $%.02f%n",
                     transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
         }
-
     }
 
     public static void displayAllDeposits(List<Transaction> lists) {
@@ -92,50 +91,73 @@ public class OutputSection {
         }
     }
 
-    public static void displayYearToDate(List<Transaction> myLists, String currentDate) {
-        String currentYear = currentDate.substring(6);
-        boolean isEmpty = true;
-        for (int i = myLists.size() - 1; i >= 0; i--) {
-            if (myLists.get(i).getDate().substring(6).equals(currentYear)) {
-                String s = String.format("%-16s %-10s %-35s %-30s %.2f", myLists.get(i).getDate(), myLists.get(i).getTime(), myLists.get(i).getDescription(), myLists.get(i).getVendor(), myLists.get(i).getAmount());
-                System.out.println(s);
-                isEmpty = false;
+    public static void displayYearToDate() {
+        for (Transaction transaction : transactions) {
+            date = transaction.getDate().getYear();
+            date2 = now.getYear();
+
+            if (date == date2) {
+                printTransaction(transaction);
             }
-        }
-        if (isEmpty) {
-            System.out.println("No transactions for this year.");
         }
     }
 
-    public static void displayPreviousYear(List<Transaction> myLists, String currentDate) {
-        int currentYear = Integer.parseInt(currentDate.substring(6));
-        String previousYear = "" + (currentYear - 1);
-        System.out.println("PreviousYear: " + previousYear);
-        boolean isEmpty = true;
-        for (int i = myLists.size() - 1; i >= 0; i--) {
-            if (myLists.get(i).getDate().substring(6).equals(previousYear)) {
-                String s = String.format("%-16s %-10s %-35s %-30s %.2f", myLists.get(i).getDate(), myLists.get(i).getTime(), myLists.get(i).getDescription(), myLists.get(i).getVendor(), myLists.get(i).getAmount());
-                System.out.println(s);
-                isEmpty = false;
+    public static void displayPreviousYear() {
+        for(Transaction transaction : transactions) {
+            date = transaction.getDate().getYear();
+            date2 = now.minusYears(1).getYear();
+
+            if (date == date2) {
+                printTransaction(transaction);
             }
-        }
-        if (isEmpty) {
-            System.out.println("You do not have any transactions on previous year");
         }
     }
 
 
-    public static void displayByVendor(List<Transaction> myLists, String UserInput) {
-        boolean found = false;
-        for (int i = myLists.size() - 1; i >= 0; i--) {
-            if (myLists.get(i).getVendor().equals(UserInput)) {
-                String s = String.format("%-16s %-10s %-35s %-30s %.2f", myLists.get(i).getDate(), myLists.get(i).getTime(), myLists.get(i).getDescription(), myLists.get(i).getVendor(), myLists.get(i).getAmount());
-                System.out.println(s);
-                found = true;
+    public static void displayByVendor(String filter, String vendor) {
+        if (!vendor.isEmpty()) {
+            filter = vendor;
+        }
+        for (Transaction transaction : transactions
+             ) {
+            if (transaction.getVendor().toLowerCase().contains(vendor)) {
+                printTransaction(transaction);
             }
         }
-        if (!found) {
-            System.out.println("No transactions found for the vendor: " + UserInput);
+    }
+
+    public static void customSearch() {
+        // Custom Search
+        System.out.println("Custom Search: ");
+        LocalDate startDate = Checker.getDateCustom("Enter a start date in (YYYY-MM-DD) or leave blank");
+        LocalDate endDate = Checker.getDateCustom("Enter a end date in (YYYY-MM-DD) or leave blank");
+        String description = Checker.getStringInput("Enter a description: ").toLowerCase();
+        String vendor = Checker.getStringInput("Enter a vendor: ").toLowerCase();
+        String amountString = Checker.getStringInputCustom("Enter an amount: "); // Evaluate input to String for isEmpty
+        double amount = Checker.parseAmount(amountString); // Evaluate if amount is Empty.
+
+
+        System.out.print("\u001B[1m");
+        System.out.printf("%40s\n", "CUSTOM SEARCH RESULT");
+        System.out.print("\u001B[0m");
+//        printTransactionTitle();
+
+        boolean ifFound = false; // Evaluate if there will be a result
+
+        for (Transaction transaction : transactions
+        ) {
+            boolean isStartDate = startDate == null || !transaction.getDate().isBefore(startDate); // Evaluates transaction date is not before the startDate or if date is null
+            boolean isEndDate = endDate == null || !transaction.getDate().isAfter(endDate); // Evaluates transactions date is not after the endDate or if date is null
+            boolean isDescription = transaction.getDescription().toLowerCase().contains(description);
+            boolean isVendor = transaction.getVendor().toLowerCase().contains(vendor);
+            boolean isAmount = transaction.getAmount() == amount || amount == 0;
+            if (isStartDate && isEndDate && isDescription && isVendor && isAmount) {
+                printTransaction(transaction);
+                ifFound = true;
+            }
+        }
+        if(!ifFound){
+            System.out.println("We couldn't find that. Sorry.");
         }
     }
 
@@ -163,7 +185,7 @@ public class OutputSection {
                 }
                 double amount = Double.parseDouble(amt); //-> 40.67 // -$456
                 DateTimeFormatter formatting = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                transactions.add(new Transaction(LocalDate.parse(parts[0], formatting), time, description, vendor, amount));
+                transactions.add(new Transaction(LocalDate.parse(parts[0], formatting), LocalTime.parse(parts[1]), description, vendor, amount));
             }
         } catch (IOException e) {
             e.printStackTrace();

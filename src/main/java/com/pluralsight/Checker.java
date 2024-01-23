@@ -1,8 +1,13 @@
 package com.pluralsight;
 
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+
+import static com.pluralsight.InputSection.scanner;
 
 public class Checker {
 
@@ -80,7 +85,144 @@ public class Checker {
         return amount >= 0 && String.format("%.2f", amount).equals(String.valueOf(amount));
     }
 
+    public static LocalDate getDate(String prompt) {
+        while (true) {
+            System.out.println(prompt);
+            String userInput = scanner.nextLine().trim();
 
+            if (userInput.isEmpty()) {
+                // Use formatter when returning current date for consistency
+               return LocalDate.now();
+            }
+
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate parsedDate = LocalDate.parse(userInput, formatter);
+                LocalDate currentDate = LocalDate.now();
+
+                if (parsedDate.isAfter(currentDate)) {
+                    System.out.println("You entered a date in the future. Please enter a valid date.");
+                } else {
+                    return parsedDate;
+                }
+            } catch (DateTimeException e) {
+                System.out.println("Invalid date format. Please try again");
+            }
+        }
+    }
+
+    static DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
+
+    public static LocalTime getTime(String prompt) {
+        while (true) {
+            System.out.println(prompt);
+            String userInput = scanner.nextLine().trim();
+
+            if (userInput.isEmpty()) {
+                LocalTime now = LocalTime.now();
+                String newNow = now.format(format);
+                return LocalTime.parse(newNow, format);
+            }
+
+            try {
+                return LocalTime.parse(userInput, format);
+            } catch (DateTimeException e) {
+                System.out.println("Invalid date format. Please try again");
+            }
+        }
+    }
+
+    public static String getStringInput(String prompt) {
+        String input;
+        System.out.println(prompt);
+        input = scanner.nextLine();
+
+        // Allow spaces in the input
+        while (!input.matches("^[a-zA-Z\\s]+$")) {
+            System.out.println("Invalid input. Please enter only letters and spaces: ");
+            input = scanner.nextLine();
+        }
+
+        return input;
+    }
+
+    public static LocalDate getDateCustom(String prompt) {
+        while (true) {
+            System.out.println(prompt);
+            String userInput = scanner.nextLine().trim();
+
+            if (userInput.isEmpty()) {
+                return null;
+            }
+
+            try {
+                return LocalDate.parse(userInput);
+            } catch (DateTimeException e) {
+                System.out.println("Invalid date format. Please try again");
+            }
+        }
+    }
+
+    public static char getCharInput() {
+        String userInput = scanner.nextLine().toUpperCase().trim();
+        if (!userInput.isEmpty()) {
+            return userInput.charAt(0);
+        } else {
+            return getCharInput();
+        }
+    }
+
+    public static String getStringInputCustom(String prompt) { // For the amount entry
+        String input;
+        System.out.println(prompt);
+        input = scanner.nextLine();
+
+        // Prompts the user in custom search in case input is empty or non-numeric
+        while (!input.isEmpty() && !isNumeric(input)) {
+            System.out.println("Invalid input. Please enter a valid value: ");
+            input = scanner.nextLine();
+        }
+
+        return input;
+    }
+
+    public static boolean isNumeric(String str) { // To evaluate in getStringInputCustom
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static double getDoubleInput(String amountString) { // For main
+        while (true) {
+            if (amountString.isEmpty()) {
+                System.out.println("Amount cannot be empty. Please enter a valid numeric amount.");
+                amountString = getStringInputCustom("Enter an amount: ");
+            } else {
+                try {
+                    return Double.parseDouble(amountString);
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Please enter a valid numeric amount.");
+                    amountString = getStringInputCustom("Enter an amount: ");
+                }
+            }
+        }
+    }
+
+    public static double parseAmount(String amountString) { // Parse the amount from getStringInputCustom
+        if (amountString.isEmpty()) {
+            return 0;
+        } else {
+            try {
+                return Double.parseDouble(amountString);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid numeric amount.");
+                return parseAmount(getStringInputCustom("Enter an amount: "));
+            }
+        }
+    }
 }
 
 

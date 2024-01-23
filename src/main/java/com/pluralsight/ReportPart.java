@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -16,8 +17,8 @@ public class ReportPart {
                 3) Year To Date
                 4) Previous Year
                 5) Search by Vendor
-                6) Back
-                                          
+                6) Custom Search
+                7) Back                          
                 """);
 
         System.out.println("Please choose your option: ");
@@ -30,26 +31,25 @@ public class ReportPart {
 
         switch (usersInput) {
             case 1:
-                OutputSection.displayMonthToDate(myLists, currentDate);
+                OutputSection.displayMonthToDate();
                 break;
             case 2:
-                OutputSection.displayPreviousMonth(myLists, currentDate);
+                OutputSection.displayPreviousMonth();
                 break;
             case 3:
-                OutputSection.displayYearToDate(myLists, currentDate);
+                OutputSection.displayYearToDate();
                 break;
             case 4:
-                OutputSection.displayPreviousYear(myLists, currentDate);
+                OutputSection.displayPreviousYear();
                 break;
             case 5:
-                System.out.println("Enter the vendor name : ");
-                String vendorInput = scanner.nextLine();
-                vendorInput = scanner.nextLine();
-                if (!vendorInput.equalsIgnoreCase("back")) {
-                    OutputSection.displayByVendor(myLists, vendorInput);
-                }
+                String inputVendor = Checker.getStringInput("Enter Vendor Name: ").toLowerCase();
+                OutputSection.displayByVendor("", inputVendor);
                 break;
             case 6:
+                OutputSection.customSearch();
+                break;
+            case 7:
                 System.out.println("You selected Back");
                 Ledger.showLedgerOptions(scanner, myLists);
             default:
