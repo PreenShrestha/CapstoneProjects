@@ -1,20 +1,43 @@
-Capstone 2.0 
-Team Name: DOSE 2.O
-Team Members: Alexis Sanchez, Preen Shrestha, Kerry Metayer, Sleaman Abdelhadi   
-         
-ReadMeFile updated (Sleaman)
-Enhancements made for Accounting Ledger (CapStone1)
-Enhance Preen’s Capstone 1 by addressing newly discovered bugs, improving clean code, updating the readme file, and incorporating enhancements from the challenge in Capstone 1. (Alexis and Preen)
-Modify, update and enhance the specified images accordingly. (Preen)
-updated output section (Sleaman)
-updated input section (Kerry)
+# DOSE 2.0 Capstone Project
 
+## Team Members:
+- Alexis Sanchez
+- Preen Shrestha
+- Kerry Metayer
+- Sleaman Abdelhadi
 
+## Overview
+This Capstone 2.0 project, led by Team DOSE 2.0, builds upon the foundation laid in Capstone 1. The team aims to address any newly discovered bugs, improve code quality, update the README file, and incorporate enhancements from the challenges faced in Capstone 1.
+
+## Updates and Enhancements
+
+### 1. Accounting Ledger (CapStone1)
+- The Accounting Ledger functionality from Capstone 1 has undergone enhancements.
+- Newly discovered bugs have been addressed to ensure a more robust and error-free application.
+- Code cleanliness has been improved, adhering to best practices for maintainability and readability.
+- The README file has been updated to provide comprehensive documentation for users and developers.
+
+### 2. Image Modifications
+- Modified and updated the specified images to enhance the visual aspects of the application.
+- These modifications aim to improve the overall user experience and interface design.
+
+### 3. Output Section
+- The enhancements focus on providing clearer and more detailed information to users.
+- Visual improvements have been made to make the output more user-friendly.
+
+### 4. Input Section
+- Modified, updated, and enhanced the input section of the application.
+- Changes aim to streamline the user input process, making it more intuitive and error-tolerant.
+- User feedback has been incorporated to enhance the overall user experience.
+
+### 5. Added Custom Search 
+- Users can search the Transaction 
+
+## Before and After 
 ![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/22596b46-fccb-4c00-a710-9708b8b751b7)
 
 ![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/9a5bbbfb-7bbe-4ad6-a307-d5cf3287e1f7)
 
-![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/5536d4bc-6d7c-4e64-84e6-8ff5c3dcec9f)
 
 ![image](https://github.com/PreenShrestha/CapstoneProjects/assets/147070134/8ae16946-406c-41cb-b9ce-0b31a1b21e72)
 
