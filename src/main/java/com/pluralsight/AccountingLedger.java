@@ -7,6 +7,12 @@ import java.util.List;
 
 
 public class AccountingLedger {
+
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in); //taking user input
 
@@ -14,7 +20,7 @@ public class AccountingLedger {
 
 
         while (true) { //display homeScreen
-            System.out.print("""
+            System.out.print(ANSI_YELLOW + """
                                                 
                              ┌───────────────────────────────────────────┐
                              │   Welcome to The Financial Tracker App!   │
@@ -23,11 +29,8 @@ public class AccountingLedger {
                                          <<< HOME SCREEN >>>
                                      
                     Please Choose an Option to Start:
-                    'A' Add Deposit
-                    'M' Make Payment
-                    'L' Ledger
-                    'X' Exit
-                    """);
+                    """ + ANSI_BLUE + "'A' Add Deposit\n'M' Make Payment\n'L' Ledger\n'X' Exit" + ANSI_BLUE + """
+                    """ + ANSI_RESET);
             char option = scanner.next().toUpperCase().charAt(0); //make the first letter to uppercase
 
             switch (option) { //user chooses the options
@@ -44,7 +47,7 @@ public class AccountingLedger {
                     System.out.println("Exiting the application.");
                     System.exit(0);
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    System.out.println(ANSI_GREEN + "Invalid option. Please try again." + ANSI_RESET);
             }
         }
     }

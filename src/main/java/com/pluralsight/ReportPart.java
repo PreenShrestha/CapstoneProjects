@@ -7,21 +7,21 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ReportPart {
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+
     public static void showReportOptions(Scanner scanner, List<Transaction> myLists) {
-        System.out.print("""
+        System.out.print(ANSI_BLUE + """
                              <<< REPORTS SCREEN >>>
                              
                 Please choose an option to proceed:
-                1) Month to Date
-                2) Previous Month
-                3) Year To Date
-                4) Previous Year
-                5) Search by Vendor
-                6) Custom Search
-                7) Back                          
-                """);
+                """ + ANSI_YELLOW + "1) Month to Date\n2) Previous Month\n3) Year To Date\n4) Previous Year\n" +
+                "5) Search by Vendor\n6) Custom Search\n7) Back" + ANSI_BLUE + """
+                """ + ANSI_RESET);
 
-        System.out.println("Please choose your option: ");
+        System.out.println(ANSI_GREEN + "\nPlease choose your option: " + ANSI_RESET);
         int usersInput = scanner.nextInt();
 
         LocalDateTime currentTime = LocalDateTime.now(); //This line retrieves the current date and time
@@ -50,10 +50,10 @@ public class ReportPart {
                 OutputSection.customSearch();
                 break;
             case 7:
-                System.out.println("You selected Back");
+                System.out.println(ANSI_GREEN + "You selected Back" + ANSI_RESET);
                 Ledger.showLedgerOptions(scanner, myLists);
             default:
-                System.out.println("Invalid choice. Please select a valid option.");
+                System.out.println(ANSI_YELLOW + "Invalid choice. Please select a valid option." + ANSI_RESET);
         }
     }
 
